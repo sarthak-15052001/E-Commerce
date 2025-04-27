@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block title %}Customer Order List Page{% endblock title %}
+
+{% block main-content %}
+
+
+<section class="section-conten padding-y bg">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <!--   SIDEBAR   -->
+                <ul class="list-group">
+                    <a class="list-group-item" href="{% url 'core:customerdashboard' %}"> Dashboard </a>
+                    <a class="list-group-item active" href=""> My Orders </a>
+                    <a class="list-group-item" href="{% url 'core:customerprofile' %}">Profile</a>
+                </ul>
+                <br>
+                <a class="btn btn-light btn-block" href="{% url 'userauths:sign-out' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a> 
+                <!--   SIDEBAR .//END   --> 
+            </aside>
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header">
+                        <h3><center><strong class="d-inline-block mr-3">Your Order History</h3></center></strong>
+                    </header>
+                    <div class="card-body">
+                        <div class="row"> 
+                            <div class="col-md-12">
+                                <table class="table table-hover d-inline">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Order ID</th>
+                                        <th scope="col">Billing Name</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Order Total</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Actions</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for payment in payments %}
+                                      <tr>
+                                        <th scope="row">{{payment.order_id}}</th>
+                                        <td>{{payment.orderproduct.Order.first_name}} {{payment.orderproduct.Order.last_name}}</td>
+                                        <td>{{payment.orderproduct.Order.phone_number}}</td>
+                                        <td>Rs. {{payment.orderproduct.total_amount}}</td>
+                                        <td>{{payment.made_on}}</td>
+                                        <td>
+                                            <a href="{% url 'core:invoice' payment.pk %}"><button type="submit" class="btn btn-warning">View Details</button></a>
+                                      </tr>
+                                      {% endfor %}
+                                      
+                                      
+                                    </tbody>
+                                  </table> 
+                            </div>
+
+                        </div> <!-- row.// -->
+                    </div> <!-- card-body .// -->
+                </article> <!-- order-group.// --> 
+            </main>
+        </div> <!-- row.// -->
+    </div>
+</section>
+
+
+{% endblock main-content %}

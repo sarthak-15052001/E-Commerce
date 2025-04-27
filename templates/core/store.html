@@ -1,0 +1,136 @@
+{% extends 'core/base.html' %}
+
+
+
+{% load static %}
+{% block title %}Store{% endblock title %}
+
+{% block main-content %}
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page">Our Store</h2>
+    </div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION INTRO END// ========================= -->
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <div class="card">
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Categories</h6>
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_1">
+                            <div class="card-body">
+                                <ul class="list-menu">
+                                    <li><b>All Products</b></li>
+                                    {% for category in categories %}
+                                    <li><a href="{{category.get_url}}">{{category.title}}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div> <!-- card-body.// -->
+                        </div>
+                    </article>
+
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_categories" aria-expanded="true" class="">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Brands</h6>
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_categories" style="">
+                            <div class="card-body">
+                                <ul class="list-menu">
+                                    <li><b>All Brands</b></li>
+
+                                    {% for brand in brands %}
+                                    {% if category_title %}
+                                    <li><a href="{% url 'core:products_by_category' category_title %}?brand={{ brand.brand |urlencode}}">{{ brand.brand }}</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'core:store' %}?brand={{ brand.brand }}">{{ brand.brand }}</a></li>
+                                    {% endif %}
+                                    {% endfor %} 
+                                </ul>
+                            </div> <!-- card-body.// -->
+                        </div>
+                    </article> <!-- filter-group  .// -->
+                    
+                    <article class="filter-group">
+                        <header class="card-header">
+                            <a href="#" data-toggle="collapse" data-target="#collapse_price" aria-expanded="true" class="">
+                                <i class="icon-control fa fa-chevron-down"></i>
+                                <h6 class="title">Price range</h6>
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_price" style="">
+                            <div class="card-body">
+                                <form action="{% if category_title %}
+                                                {% url 'core:products_by_category' category_title %}
+                                            {% else %}
+                                                {% url 'core:store' %}
+                                            {% endif %}" method="GET">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Min Price (Rs.)</label>
+                                            <input type="number" class="form-control" name="min_price" value="{{ request.GET.min_price }}">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label>Max Price (Rs.)</label>
+                                            <input type="number" class="form-control" name="max_price" value="{{ request.GET.max_price }}">
+                                        </div>
+                                    </div>
+                                    
+                                    <input type="hidden" name="brand" value="{% if request.GET.brand %}{{ request.GET.brand }}{% endif %}">
+                                    
+                                    <button type="submit" class="btn btn-block btn-primary">Apply</button>
+                                </form>
+                            </div><!-- card-body.// -->
+                        </div>
+                    </article> <!-- filter-group .// -->
+
+                </div> <!-- card.// -->
+            </aside> <!-- col.// -->
+            <main class="col-md-9">
+                <!-- Content for product display -->
+                <header class="border-bottom mb-4 pb-3">
+                    <div class="form-inline">
+                        <span class="mr-md-auto"> {{products|length}} Items found </span>
+                        
+                    </div>
+            </header><!-- sect-heading -->
+            <div class="row">
+                
+                {% for product in products %}
+                <div class="col-md-4">
+                    <figure class="card card-product-grid">
+                        <div class="img-wrap"> 
+                           <a href=""><img src="{{product.product_image.url}}"></a>
+                        </div> <!-- img-wrap.// -->
+                        <figcaption class="info-wrap">
+                            <div class="fix-height">
+                                <a href="" class="title">{{product.title}}</a>
+                                <div class="price-wrap mt-2">
+                                    <span class="price">Rs. {{product.selling_price}}</span>
+                                    
+                                </div> <!-- price-wrap.// -->
+                            </div>
+                            <a href="{% url 'core:productdetail' product.pk %}" class="btn btn-block btn-success">View</a>
+                        </figcaption>
+                    </figure>
+                </div> <!-- col.// -->
+                {% endfor %}
+            </div> <!-- row end.// -->
+        </main> <!-- col.// -->
+    </div>
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock main-content %}

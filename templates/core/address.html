@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Profile Detail {% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid mb-2"><a href="{% url 'core:profile' %}" class="btn">Profile</a></li>
+    <li class="d-grid mb-2"><a href="{% url 'core:customerlist' %}" class="btn btn-primary">Address</a></li>
+   </ul>
+  </div>
+  <div class="col-sm-10">        <!-- Expanded the column to accommodate both addresses -->
+   <div class="row">
+    {% for cust in customers %}
+    <div class="col-sm-6">       <!-- Each address will take half of the space -->
+     <div class="card mb-3">
+      <div class="row g-0">
+       <div class="col-md-4">
+        <!-- Profile Photo -->
+        <img src="{% if cust.image %}{{ cust.image.url }}{% else %} {% endif %}" class="img-fluid rounded-start" alt="Profile Photo">
+       </div>
+       <div class="col-md-8">
+        <div class="card-body">
+         <h5 class="card-title">Address {{forloop.counter}}</h5>
+         <p class="card-text">Name: {{cust.name}}</p>
+         <p class="card-text">Locality: {{cust.locality}}</p>
+         <p class="card-text">City: {{cust.city}}</p>
+         <p class="card-text">State: {{cust.state}}</p>
+         <p class="card-text">Pin Code: {{cust.zipcode}}</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    {% endfor %}
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}

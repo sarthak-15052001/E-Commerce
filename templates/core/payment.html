@@ -1,0 +1,142 @@
+{% extends 'core/base.html' %}
+{% load mathfilters %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+{% block title %}Payment Page{% endblock title %}
+
+
+
+
+{% block main-content %}
+
+
+<section class="section-content padding-y bg">
+  <div class="container">
+    <!-- ============================ COMPONENT 1 ================================= -->
+    <h4 class="text-center mb-10">Review Your Order and Make Payment</h4>
+    <div class="row">
+      <aside class="col-lg-8">
+        <div class="card">
+          <h5 class="card-header">Billing Address</h5>
+          <div class="card-body">
+            <p class="card-text mb-0"><b>Name:-</b> {{ order.first_name }} {{ order.last_name}}</p>
+            <p class="card-text mb-0"><b>Address:-</b> {{order.address}}, {{order.city}}, {{ order.state }}-
+              {{order.zipcode}}</p>
+            <p class="card-text mb-0"><b>Email:-</b> {{ order.email }}</p>
+            <p class="card-text mb-0"><b>Phone Number:-</b> {{ order.phone_number }}</p>
+          </div>
+        </div>
+        <div class="card">
+          <h5 class="card-header">Payment Method</h5>
+          <div class="card-body">
+            <form action="" id="payment-form" method="POST"> 
+                {% csrf_token %}
+                <input type="hidden" name="orderproduct-id" value="{{ order_product.id }}">
+              <div class="form-group">
+                <label for="payment_type">Select Payment Method:</label>
+                <select id="payment_type" name="payment_type" class="form-control">
+                  {% for choice in form.payment_type.field.choices %}
+                  <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+          </div>
+        </div>
+
+
+        <div class="card">
+          <h5 class="card-header">Review products</h5>
+          <div class="card-body">
+            <table class="table table-borderless table-shopping-cart">
+              <thead class="text-muted">
+                <tr class="small text-uppercase">
+                  <th scope="col">Product</th>
+                  <th scope="col" width="120">Quantity</th>
+                  <th scope="col" width="120">Price</th>
+                  <th scope="col" class="text-right" width="200"> </th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order_product in order.orderproduct_set.all %}
+                <tr>
+                  <td>
+                    <figure class="itemside align-items-center">
+                      <div class="aside"><img src="{{ order_product.product.product_image.url }}" class="img-sm"></div>
+                      <figcaption class="info">
+                        <a href="#" class="title text-dark">{{order_product.product.title}}</a>
+                        <p class="text-muted small"> Brand: {{order_product.product.brand}}</p>
+                      </figcaption>
+                    </figure>
+                  </td>
+                  <td>{{ order_product.quantity }}</td>
+                  <td>
+                    <div class="price-wrap">
+                      <var class="price d-inline">Rs. <span id="{{cart_item.id}}">
+                          {{ order_product.product.discounted_price |mul:order_product.quantity }}
+                        </span>
+                      </var>
+                      <small class="text-muted d-inline">Rs. {{order_product.product.discounted_price}} each
+                      </small>
+                    </div> <!-- price-wrap .// -->
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </aside> <!-- col.// -->
+      <aside class="col-lg-4">
+        <!-- Cart summary -->
+        <div class="card">
+          <div class="card-body">
+            <!-- Display amount, shipping charges, and total -->
+            <dl class="dlist-align">
+              <dt>Amount:</dt>
+              <dd class="text-right"><b>Rs.<span id="amount"> {{ order_product.amount }}</b></span></dd>
+            </dl>
+            <dl class="dlist-align">
+              <dt>Shipping Charges:</dt>
+              <dd class="text-right"><b>Rs. 70.0</b></dd>
+            </dl>
+            <hr>
+            <dl class="dlist-align">
+              <dt>Total (including VAT)</dt>
+              <dd class="text-right total-amount">
+              <b>Rs. <span class="total-amount-value">{{ form.total_amount }}</span></b>
+               </dd> 
+            </dl>
+            <br>
+            <p class="text-center mb-3">
+              <img src="{% static 'core/images/payavail/payments.png' %}" height="26">
+            </p>
+            <button type="submit" id="make-payment-btn" class="btn btn-primary btn-block mb-3"> Make Payment</button></a>
+            {% comment %} <button type="submit" class="btn btn-primary btn-block mb-3">Checkout</button> {% endcomment %}
+          </form>
+          </div> <!-- card-body.// -->
+        </div> <!-- card.// -->
+      </aside> <!-- col.// -->
+
+      <!-- Display empty cart message and image -->
+    </div> <!-- row.// -->
+    <!-- ============================ COMPONENT 1 END .// ================================= -->
+  </div> <!-- container .//  -->
+</section>
+
+<script>
+  document.getElementById('make-payment-btn').addEventListener('click', function() {
+      var paymentType = document.getElementById('payment_type').value;
+      var form = document.getElementById('payment-form');
+      
+      if (paymentType === 'Card') {
+          form.action = "{% url 'core:paymentcheckoutsession' %}";
+      } else if (paymentType === 'Cash') {
+          form.action = "{% url 'core:payment' order_product.id %}";
+      }
+      
+      form.submit();
+  });
+</script>
+
+{% endblock main-content %}

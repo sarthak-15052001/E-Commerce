@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Page</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .text-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row invoice row-printable">
+        <div class="col-md-12">
+            <div class="panel panel-default plain" id="dash_0">
+                <div class="panel-body p30">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!-- Left Side Content -->
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="invoice-from">
+                                <ul class="list-unstyled text-right" style="list-style-type: none;">
+                                    <li><strong>Invoiced To,</strong></li>
+                                    <li>{{ payments.0.orderproduct.Order.first_name }} {{ payments.0.orderproduct.Order.last_name }}</li>
+                                    <li>{{ payments.0.orderproduct.Order.address }}</li>
+                                    <li>{{ payments.0.orderproduct.Order.city }}-{{ payments.0.orderproduct.Order.zipcode }}</li>
+                                    <li>{{ payments.0.orderproduct.Order.state }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                          <br>
+                        <div class="col-lg-12">
+                            <div class="invoice-details mt25">
+                                <div class="well">
+                                    <ul class="list-unstyled mb-1 mt-2" style="list-style-type: none;">
+                                        <li><strong>Order ID:- </strong>{{ payments.0.order_id }}</li>
+                                        <li><strong>Order Date:- </strong>{{ payments.0.made_on }}</li>
+                                        <li><strong>Status:- </strong>{{ payments.0.payment_status }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="invoice-items">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th class="per70 text-center">Description</th>
+                                                <th class="per5 text-center">Qty</th>
+                                                <th class="per25 text-center">Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for order_product in order_products %}
+                                            <tr>
+                                                <td>{{ order_product.product.title }} of {{ order_product.product.brand }} brand</td>
+                                                <td class="text-center">{{ order_product.quantity }}</td>
+                                                <td class="text-center">Rs. {{ order_product.total_product_amount }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="2" class="text-right">Sub Total:</th>
+                                                <th class="text-center">Rs. {{ payments.0.orderproduct.amount }}</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="text-right">Shipping Charges:</th>
+                                                <th class="text-center">Rs. 70.0</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="2" class="text-right">Grand Total:</th>
+                                                <th class="text-center">Rs. {{ payments.0.orderproduct.total_amount }}</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+{% extends 'userauths/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header"></div>
+        <div class="modal-content">
+            <form action="" method="POSt" enctype="multipart/form-data"> {% csrf_token %}
+            <div class="modal-body text-center"> <img src="{% static 'userauths/assets/img/sent.png' %}" alt="" width="50" height="46">
+                <h3 class="delete_class">Are you sure want to delete this Asset?</h3>
+                <div class="m-t-20"> <a href="{% url 'userauths:categorylist' %}" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <a href="{% url 'userauths:categorylist' %}"><button type="submit" class="btn btn-danger">Yes</button></a>
+                </form>
+        </div> 
+    </div>
+    </div>
+</div>
+</div>
+{% endblock %}

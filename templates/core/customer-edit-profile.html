@@ -1,0 +1,103 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Customer Edit Page{% endblock title %}
+
+{% block main-content %}
+
+
+<section class="section-conten padding-y bg">
+    <div class="container">
+        <div class="row">
+            <aside class="col-md-3">
+                <!--   SIDEBAR   -->
+                <ul class="list-group">
+                    <a class="list-group-item" href="{% url 'core:customerdashboard' %}"> Dashboard </a>
+                    <a class="list-group-item" href="{% url 'core:customerorders' %}"> My Orders </a>
+                    <a class="list-group-item" href="{% url 'core:customerprofile' %}">Profile</a>
+                </ul>
+                <br>
+                <a class="btn btn-light btn-block" href="{% url 'userauths:sign-out' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a> 
+                <!--   SIDEBAR .//END   --> 
+            </aside>
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header">
+                        <h3><center><strong class="d-inline-block mr-3">Edit Your Profile</h3></center></strong>
+                    </header>
+                    <div class="card-body">
+                        <div class="row"> 
+                            <div class="col-md-12"> 
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                   
+                                    {% csrf_token %}
+                                    
+
+                                    <div class="row form-row">
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                {{user_form.first_name | as_crispy_field}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                  {{user_form.last_name | as_crispy_field}}
+                                            </div>
+                                        </div>
+
+                                        
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                {{user_form.phone_number | as_crispy_field}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                 {{form.bio | as_crispy_field}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                               {{form.address | as_crispy_field}}
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                              {{form.city | as_crispy_field}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                 {{form.state | as_crispy_field}}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                  {{form.zipcode | as_crispy_field}}
+                                        </div>
+
+                                        <div class="col-12 col-sm-6 ">
+                                            <div class="form-group">
+                                                 {{form.profile_picture | as_crispy_field}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" value="save">
+                                </form>
+                            </div>
+
+                        </div> <!-- row.// -->
+                    </div> <!-- card-body .// -->
+                </article> <!-- order-group.// --> 
+            </main>
+        </div> <!-- row.// -->
+    </div>
+</section>
+
+
+{% endblock main-content %}

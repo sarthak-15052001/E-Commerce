@@ -1,0 +1,138 @@
+{% extends 'userauths/base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    .panel {
+        background: #f1f1f1;
+        margin-bottom: 50px;
+        width: 60%;
+        margin: 0 auto;
+        padding: 50px;
+    }
+
+    .invoice-from ul {
+        list-style-type: none;
+        text-align: right;
+        margin-bottom: 40px;
+    }
+
+    .invoice-details ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .invoice-items table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .invoice-items th,
+    .invoice-items td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .invoice-footer {
+        margin-top: 25px;
+        text-align: center;
+    }
+
+    .invoice-logo img {
+        max-height: 100px;
+    }
+
+    .invoice-details {
+        margin-bottom: 40px;
+    }
+
+    .invoice-details .well {
+        background-color: #f9f9f9;
+        padding: 10px;
+        text-align: left;
+        margin-left: 40px;
+    }
+
+</style>
+
+<div class="container">
+    <div class="panel">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="invoice-logo"><img src="{% static 'core/images/logo.jpg' %}" alt="Invoice logo"></div>
+            </div>
+            <div class="col-lg-6">
+                <div class="invoice-from">
+                    <ul>
+                        <li><strong>Invoiced To,</strong></li>
+                        <li>{{ payments.0.orderproduct.Order.first_name }} {{ payments.0.orderproduct.Order.last_name }}</li>
+                        <li>{{ payments.0.orderproduct.Order.address }}</li>
+                        <li>{{ payments.0.orderproduct.Order.city }}-{{ payments.0.orderproduct.Order.zipcode }}</li>
+                        <li>{{ payments.0.orderproduct.Order.state }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-details">
+            <div class="well">
+                <ul>
+                    <li><strong>Order ID:- </strong>{{ payments.0.order_id }}</li>
+                    <li><strong>Payment Method:- </strong>{{ payments.0.payment_type }}</li>
+                    <li><strong>Order Date:- </strong>{{ payments.0.made_on }}</li>
+                    <li><strong>Status:- </strong>{{ payments.0.payment_status }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="invoice-items">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order_product in order_products %}
+                    <tr>
+                        <td>{{ order_product.product.title }} of {{ order_product.product.brand }} brand</td>
+                        <td>{{ order_product.quantity }}</td>
+                        <td>Rs. {{ order_product.total_product_amount }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">Sub Total:</th>
+                        <th>Rs. {{ payments.0.orderproduct.amount }}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Shipping Charges:</th>
+                        <th>Rs. 70.0</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">Grand Total:</th>
+                        <th>Rs. {{ payments.0.orderproduct.total_amount }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="invoice-footer">
+            <p>Thank you for shopping with us!</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

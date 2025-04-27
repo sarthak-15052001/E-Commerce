@@ -1,0 +1,96 @@
+{% extends 'userauths/base.html' %}
+{% load static %}
+{% block content %}
+		<div class="page-wrapper">
+			<div class="content container-fluid">
+				<div class="page-header">
+					<div class="row">
+						<div class="col-sm-12 mt-5">
+							<h3 class="page-title mt-3">Administrator:- {{user.first_name}} {{user.last_name}}</h3>
+							<ul class="breadcrumb">
+								<li class="breadcrumb-item active">Dashboard</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xl-3 col-sm-6 col-12">
+						<div class="card board1 fill">
+							<div class="card-body">
+								<div class="dash-widget-header">
+									<div>
+										<h3 class="card_widget_header">{{ total_category }}</h3>
+										<h6 class="text-muted">Total Category</h6> </div>
+									<div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers">
+										<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+										<polyline points="2 17 12 22 22 17"></polyline>
+										<polyline points="2 12 12 17 22 12"></polyline>
+									</svg></span> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-sm-6 col-12">
+						<div class="card board1 fill">
+							<div class="card-body">
+								<div class="dash-widget-header">
+									<div>
+										<h3 class="card_widget_header">{{total_products}}</h3>
+										<h6 class="text-muted">Total Products</h6> </div>
+									<div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-product-hunt">
+										<rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                        <circle cx="7" cy="7" r="2.18"></circle>
+                                        <circle cx="17" cy="7" r="2.18"></circle>
+                                        <circle cx="7" cy="17" r="2.18"></circle>
+                                        <circle cx="17" cy="17" r="2.18"></circle>
+                                        <line x1="7" y1="12" x2="17" y2="12"></line>
+                                        <line x1="12" y1="7" x2="12" y2="17"></line>
+                                        </svg></span> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-sm-6 col-12">
+						<div class="card board1 fill">
+							<div class="card-body">
+								<div class="dash-widget-header">
+									<div>
+										<h3 class="card_widget_header">{{total_customers}}</h3>
+										<h6 class="text-muted">Total Customers</h6> </div>
+									<div class="ml-auto mt-md-3 mt-lg-0"> <span class="opacity-7 text-muted"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
+									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
+									</path>
+									<polyline points="14 2 14 8 20 8"></polyline>
+									<line x1="12" y1="18" x2="12" y2="12"></line>
+									<line x1="9" y1="15" x2="15" y2="15"></line>
+									</svg></span> </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-sm-6 col-12">
+						<div class="card board1 fill">
+							<div class="card-body">
+								<div class="dash-widget-header">
+									<div>
+										<h3 class="card_widget_header">{{total_orders}}</h3>
+										<h6 class="text-muted">Total Orders</h6>
+									</div>
+									<div class="ml-auto mt-md-3 mt-lg-0">
+										<span class="opacity-7 text-muted">
+											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
+												<circle cx="9" cy="21" r="1"></circle>
+												<circle cx="20" cy="21" r="1"></circle>
+												<path d="M1 1h4l2.68 10.72a2 2 0 0 0 1.92 1.38h10.8a2 2 0 0 0 1.92-1.38L23 6H6"></path>
+											</svg>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

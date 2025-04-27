@@ -1,0 +1,83 @@
+{% extends 'userauths/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <div class="mt-5">
+                        <h4 class="card-title float-left mt-2">All Products</h4>
+                        <a href="{% url 'userauths:addproduct' %}" class="btn btn-primary float-right veiwbutton">Add Product</a>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-5 offset-1 d-flex justify-content-center">
+                            <form method="GET" action="">
+                                <div class="input-group">
+                                    <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-success" type="submit">Search</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row mt-3">
+                        <div class="col-3">
+                            <!-- Your content for All Category goes here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card card-table">
+            <div class="card-body booking_card">
+                <div class="table-responsive">
+                    <table class="datatable table table-stripped table table-hover table-center mb-1">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Product ID</th>
+                                <th>User</th>
+                                <th>Category Name</th>
+                                <th>Product Title</th>
+                                <th>Image</th>
+                                <th>Selling Price</th>
+                                <th>Discounted Price</th>
+                                <th>Description</th>
+                                <th>Brand</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in products %}
+                            <tr>
+                                <td>{{product.id}}</td>
+                                <th>{{product.user.username}}</td>
+                                <td>{{product.category.title}}</td>
+                                <td>{{product.title}}</td>
+                                <td><img src="/media/{{product.product_image}}"style="height: 70px; width: 70px; border-radius: 10px";></td>
+                                <td>{{product.selling_price}}</td>
+                                <td>{{product.discounted_price}}</td>
+                                <td>{{product.description}}</td>
+                                <td>{{product.brand}}</td>
+                                <td>
+                                    <a href="{% url 'userauths:productupdate' product.pk %}"><button type="submit" class="btn btn-warning">Update</button></a>
+                                    <a href="{% url 'userauths:productdelete' product.pk %}"><button type="submit" class="btn btn-danger ml-1">Delete</button></a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

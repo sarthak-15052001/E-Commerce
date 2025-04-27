@@ -1,0 +1,89 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Product Detail{% endblock title %}
+
+{% block styles %}
+<style>
+    .img-big-wrap {
+        width: 100%; /* Ensure image container takes full width */
+        max-width: 400px; /* Set maximum width for consistency */
+        height: auto; /* Allow height to adjust based on image proportions */
+    }
+
+    .img-big-wrap img {
+        width: 100%; /* Ensure image takes full width of container */
+        height: auto; /* Allow height to adjust based on image proportions */
+        display: block; /* Ensure images are displayed as blocks */
+    }
+</style>
+{% endblock styles %}
+
+{% block main-content %}
+<section class="section-content padding-y bg">
+    <div class="container">
+        <!-- Product Details -->
+        <div class="card p-4">
+            <div class="row no-gutters">
+                <aside class="col-md-6">
+                    <div class="img-big-wrap border rounded shadow-sm">
+                        <a href="#"><img src="{{ products.product_image.url }}" class="img-fluid"></a>
+                    </div> <!-- img-big-wrap.// -->
+                </aside>
+                <main class="col-md-6 border-left">
+                    <div class="content-body">
+                        <h2 class="title">{{ products.title }}</h2>
+                        <h3 class="title">Brand: {{ products.brand }}</h3>
+                        <div class="mb-3">
+                            <h4>Rs. {{ products.discounted_price }} <small
+                                    class="fw-light text-decoration-line-through">{{ products.selling_price }}</small>
+                            </h4>
+                        </div>
+                        <p class="mb-4">{{ products.description }}</p>
+                        <form action="{% url 'core:add_to_cart' %}" class="d-inline">
+                            <input type="hidden" name="prod_id" value="{{ products.id }}" id="prod_id">
+                            {% if item_already_exits_in_cart %}    
+                                <a href="{% url 'core:add_to_cart' %}" class="btn btn-warning shadow px-5 py-2">Go To Cart</a>
+                            {% else %}
+                                <button type="submit" class="btn btn-primary shadow px-5 py-2">Add to Cart</button>
+                            {% endif %}
+                        </form>
+                        <h5 class="mt-5">Available Offers</h5>
+                        <ul>
+                            <li>Bank Offer 5% Unlimited Cashback on Flipkart Axis Bank Credit</li>
+                            <li>Special Price Get extra ₹3000 off (price inclusive of discount)</li>
+                            <li>No cost EMI ₹1,667/month. Standard EMI also available</li>
+                            <li>Partner Offer ₹2000 Flipkart Gift Card on Every 1000th Transaction with a new Visa
+                                Debit/Credit Card</li>
+                        </ul>
+                    </div>
+                </main> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
+        <!-- Customer Reviews -->
+        <div class="row mt-5">
+            <div class="col-md-9">
+                <header class="section-heading">
+                    <h3>Customer Reviews</h3>
+                </header>
+                <article class="box mb-3">
+                    <div class="icontext w-100">
+                        <img src="./images/avatars/avatar1.jpg" class="img-xs icon rounded-circle" alt="Avatar">
+                        <div class="text">
+                            <span class="date text-muted float-md-right">24.04.2020</span>
+                            <h6 class="mb-1">Mike John</h6>
+                        </div>
+                    </div> <!-- icontext.// -->
+                    <div class="mt-3">
+                        <p>
+                            Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        </p>
+                    </div>
+                </article>
+            </div> <!-- col.// -->
+        </div> <!-- row.// -->
+    </div> <!-- container .//  -->
+</section>
+{% endblock main-content %}

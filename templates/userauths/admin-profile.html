@@ -1,0 +1,95 @@
+{% extends 'userauths/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header mt-5">
+            <div class="row">
+                <div class="col">
+                    <h3 class="page-title">Profile</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'userauths:myadmin' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ul>
+                </div>
+            </div>        
+        </div>
+        <div class="row justify-content-center"> <!-- Center aligning the card -->
+            <div class="col-md-8">
+                <div class="card text-center"> <!-- Center aligning the card content -->
+                    <div class="card-header">
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col">
+                                <h5 class="modal-title">Personal Details</h5> <!-- Center aligning the heading -->
+                            </div>
+                            <div class="col-auto">
+                                <a href="{% url 'userauths:profileupdate' pk=user.pk %}" class="btn btn-primary">Edit Profile</a> <!-- Add the button for editing profile -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="profile-header">
+                            <div class="row align-items-center">
+                                <div class="col-auto profile-image">
+                                    {% if user_profile.profile_picture %}
+                                    <a href="#"> <img class="rounded-circle" alt="User Image"
+                                            src="{{ user_profile.profile_picture.url }}"></a>
+                                    {% else %}
+                                    <a href="#"> <img class="rounded-circle" alt="User Image"
+                                            src="{% static 'path/to/default/image.jpg' %}"></a>
+                                    {% endif %}
+                                </div>
+                                <div class="col ml-md-n2 profile-user-info">
+                                    <h4 class="user-name mb-3">{{user.first_name}} {{user.last_name}}</h4>
+                                    <h6 class="text-muted mt-3">Manager</h6>
+                                    <div class="user-Location mt-1"><i class="fas fa-map-marker-alt"></i> {{user_profile.city}},
+                                        {{user.country}}</div>
+                                    <div class="about-text">{{user_profile.bio}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-menu">
+                        </div>
+                        <div class="tab-content profile-tab-cont">
+                            <div class="tab-pane fade show active" id="per_details_tab">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row mt-3">
+                                                    <div class="col-sm-3 text-sm-right">Name:</div>
+                                                    <div class="col-sm-9">{{ user.first_name }} {{ user.last_name }}</div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-sm-3 text-sm-right">Email ID:</div>
+                                                    <div class="col-sm-9"><a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-sm-3 text-sm-right">Mobile:</div>
+                                                    <div class="col-sm-9">{{ user.phone_number }}</div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-sm-3 text-sm-right">Address:</div>
+                                                    <div class="col-sm-9">{{ user_profile.address }}, {{ user_profile.city }}-
+                                                        {{ user_profile.zipcode }}</div>
+                                                </div>
+                                                <div class="row mt-3">
+                                                    <div class="col-sm-3 text-sm-right">State:</div>
+                                                    <div class="col-sm-9">{{ user_profile.state }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

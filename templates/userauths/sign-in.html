@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}Login{% endblock title %}
+
+{% block main-content %}
+<div class="container">
+ <div class="row my-3">
+  <div class="col-sm-6 offset-sm-3">
+   <h3><center>Login</h3></center>
+   <hr>
+
+   <div class="text-center"> <!-- Added text-center class here -->
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    </div>
+
+   <form action="" method="POST" novalidate class="shadow p-5">
+    {% csrf_token %}
+    {{ form|crispy }}
+
+    <small><b><a href="{% url 'userauths:passwordreset' %}">Forgot Password ?</a></small></b><br>
+    <button type="submit" class="btn btn-primary mt-4">Login</button>
+    <br>
+    <div class="text-center text-primary fw-bold"><small><b>New to ShoppinglyX ? <a href="{% url 'userauths:sign-up' %}"
+       class="text-danger">Create an Account</a> </small></b></div>
+   </form>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}
